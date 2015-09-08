@@ -1,6 +1,7 @@
 package gregtech.common;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
@@ -1856,7 +1857,13 @@ public abstract class GT_Proxy implements IGT_Mod, IGuiHandler, IFuelHandler {
 	public void activateOreDictHandler() {
 		this.mOreDictActivated = true;
 		OreDictEventContainer tEvent;
+		int i = 0;
+		int size = this.mEvents.size();
 		for (Iterator i$ = this.mEvents.iterator(); i$.hasNext(); registerRecipes(tEvent)) {
+		    i++;
+		    if (i == size || i % 500 == 0) {
+		        FMLLog.info("%s/%s processed (%s%%)", i, size, Math.round((double)i / (double)size * 100D));
+		    }
 			tEvent = (OreDictEventContainer) i$.next();
 		}
 	}
